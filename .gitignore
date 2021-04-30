@@ -1,0 +1,7 @@
+*.pyc
+/.idea/
+/dist/
+/sasrl_env/__pycache__/
+/build/
+*/__pycache__/
+/sasrl_env.egg-info/

@@ -103,15 +103,24 @@ class EnvControl(Service):
 
 class registerController(object):
     def __init__(self):
+        """
+        Initialize the env controller
+        """
         self.port = None
-        self.host = get_ip()
+        self.host = get_ip()  # get host ip
 
     def start(self, port, max_workers=1):
-
-        # todo: raise if there is no free port
-        # find the port number if not specified by user
+        """
+        This function start a environment server listening on a port and waits for termination
+        @param port: the port that the environment is listening for calls
+        @param max_workers: maximum number of workers
+        """
+        # find the controller port
         if port == 0:
+            # find the port number if not specified by user
             self.port = find_free_port()
+            if self.port is None:
+                logger.error("No free port available on {}".format(self.host))
         else:
             # check if the port is available, otherwise increase port number
             while True:
@@ -120,15 +129,16 @@ class registerController(object):
                     break
                 port += 1
 
+        # register a grpc server
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
         register(EnvControl(self.port), server)
 
+        # start the server
         address = '{}:{}'.format(self.host, self.port)
         server.add_insecure_port(address)
         server.start()
         logger.info('Env controller started at: {}:{}'.format(self.host, self.port))
         server.wait_for_termination()
-        return 0
 
 
 def start(port):
@@ -137,9 +147,9 @@ def start(port):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser('Environment Contrller')
-    parser.add_argument('--port', type=int, default=0,
-                        help='the port number which hosts the env controller service. '
+    parser = argparse.ArgumentParser('Environment Controller')
+    parser.add_argument('--port', '-p', type=int, default=0,
+                        help='The port number which hosts the env controller service. '
                              'If not specified, the port will be assigned automatically.')
     args = parser.parse_args()
     start(args.port)

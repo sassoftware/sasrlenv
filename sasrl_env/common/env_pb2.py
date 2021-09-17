@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\tenv.proto\"&\n\nServerInfo\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"\x1e\n\x08MetaData\x12\x12\n\nEnvVersion\x18\x01 \x01(\t\"\x14\n\x04Name\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"b\n\x04Info\x12!\n\x11observation_space\x18\x01 \x03(\x0b\x32\x06.Space\x12\x1c\n\x0c\x61\x63tion_space\x18\x02 \x03(\x0b\x32\x06.Space\x12\x19\n\x11max_episode_steps\x18\x03 \x01(\x05\"\x89\x01\n\x05Space\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\r\n\x05shape\x18\x02 \x03(\x05\x12\r\n\x05\x64type\x18\x03 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\t\x12\r\n\x05low_f\x18\x05 \x03(\x02\x12\x0e\n\x06high_f\x18\x06 \x03(\x02\x12\r\n\x05low_i\x18\x07 \x03(\x05\x12\x0e\n\x06high_i\x18\x08 \x03(\x05\x12\t\n\x01n\x18\t \x03(\x05\"\x07\n\x05\x45mpty\"<\n\x0bObservation\x12\x0e\n\x06\x64\x61ta_f\x18\x01 \x03(\x02\x12\x0e\n\x06\x64\x61ta_i\x18\x02 \x03(\x05\x12\r\n\x05shape\x18\x03 \x03(\x05\"7\n\x06\x41\x63tion\x12\x0e\n\x06\x64\x61ta_f\x18\x01 \x03(\x05\x12\x0e\n\x06\x64\x61ta_i\x18\x02 \x03(\x05\x12\r\n\x05shape\x18\x03 \x03(\x05\"R\n\nTransition\x12&\n\x10next_observation\x18\x01 \x01(\x0b\x32\x0c.Observation\x12\x0e\n\x06reward\x18\x02 \x01(\x02\x12\x0c\n\x04\x64one\x18\x03 \x01(\x08\"\x1a\n\nRenderMode\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"&\n\tRenderOut\x12\x0b\n\x03rgb\x18\x01 \x03(\x05\x12\x0c\n\x04\x61nsi\x18\x02 \x01(\t\"\x17\n\x07\x45nvSeed\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x05\x32L\n\nEnvControl\x12\x1e\n\x05Start\x12\x06.Empty\x1a\x0b.ServerInfo\"\x00\x12\x1e\n\x05\x43lose\x12\x0b.ServerInfo\x1a\x06.Empty\"\x00\x32\xf9\x01\n\x03\x45nv\x12 \n\tHandshake\x12\x06.Empty\x1a\t.MetaData\"\x00\x12\x16\n\x04Make\x12\x05.Name\x1a\x05.Info\"\x00\x12\x1f\n\x05Reset\x12\x06.Empty\x1a\x0c.Observation\"\x00\x12\x1e\n\x04Step\x12\x07.Action\x1a\x0b.Transition\"\x00\x12#\n\x06Render\x12\x0b.RenderMode\x1a\n.RenderOut\"\x00\x12\x1a\n\x04Seed\x12\x08.EnvSeed\x1a\x06.Empty\"\x00\x12\x1b\n\x06Sample\x12\x06.Empty\x1a\x07.Action\"\x00\x12\x19\n\x05\x43lose\x12\x06.Empty\x1a\x06.Empty\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\tenv.proto\"&\n\nServerInfo\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"\x1e\n\x08MetaData\x12\x12\n\nEnvVersion\x18\x01 \x01(\t\"%\n\x04Name\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\x12\x0f\n\x07wrapper\x18\x02 \x03(\t\"b\n\x04Info\x12!\n\x11observation_space\x18\x01 \x03(\x0b\x32\x06.Space\x12\x1c\n\x0c\x61\x63tion_space\x18\x02 \x03(\x0b\x32\x06.Space\x12\x19\n\x11max_episode_steps\x18\x03 \x01(\x05\"\xd8\x02\n\nStepInfoKV\x12$\n\x05s_map\x18\x01 \x03(\x0b\x32\x15.StepInfoKV.SMapEntry\x12$\n\x05i_map\x18\x02 \x03(\x0b\x32\x15.StepInfoKV.IMapEntry\x12$\n\x05\x66_map\x18\x03 \x03(\x0b\x32\x15.StepInfoKV.FMapEntry\x12$\n\x05\x62_map\x18\x04 \x03(\x0b\x32\x15.StepInfoKV.BMapEntry\x1a+\n\tSMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tIMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tFMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02:\x02\x38\x01\x1a+\n\tBMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"%\n\x08StepInfo\x12\x19\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x0b.StepInfoKV\"\x89\x01\n\x05Space\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\r\n\x05shape\x18\x02 \x03(\x05\x12\r\n\x05\x64type\x18\x03 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\t\x12\r\n\x05low_f\x18\x05 \x03(\x02\x12\x0e\n\x06high_f\x18\x06 \x03(\x02\x12\r\n\x05low_i\x18\x07 \x03(\x05\x12\x0e\n\x06high_i\x18\x08 \x03(\x05\x12\t\n\x01n\x18\t \x01(\x05\"\x07\n\x05\x45mpty\"<\n\x0bObservation\x12\x0e\n\x06\x64\x61ta_f\x18\x01 \x03(\x02\x12\x0e\n\x06\x64\x61ta_i\x18\x02 \x03(\x05\x12\r\n\x05shape\x18\x03 \x03(\x05\"7\n\x06\x41\x63tion\x12\x0e\n\x06\x64\x61ta_f\x18\x01 \x03(\x05\x12\x0e\n\x06\x64\x61ta_i\x18\x02 \x03(\x05\x12\r\n\x05shape\x18\x03 \x03(\x05\"k\n\nTransition\x12&\n\x10next_observation\x18\x01 \x01(\x0b\x32\x0c.Observation\x12\x0e\n\x06reward\x18\x02 \x01(\x02\x12\x0c\n\x04\x64one\x18\x03 \x01(\x08\x12\x17\n\x04info\x18\x04 \x01(\x0b\x32\t.StepInfo\"\x1a\n\nRenderMode\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"&\n\tRenderOut\x12\x0b\n\x03rgb\x18\x01 \x03(\x05\x12\x0c\n\x04\x61nsi\x18\x02 \x01(\t\"\x17\n\x07\x45nvSeed\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x05\x32L\n\nEnvControl\x12\x1e\n\x05Start\x12\x06.Empty\x1a\x0b.ServerInfo\"\x00\x12\x1e\n\x05\x43lose\x12\x0b.ServerInfo\x1a\x06.Empty\"\x00\x32\xf9\x01\n\x03\x45nv\x12 \n\tHandshake\x12\x06.Empty\x1a\t.MetaData\"\x00\x12\x16\n\x04Make\x12\x05.Name\x1a\x05.Info\"\x00\x12\x1f\n\x05Reset\x12\x06.Empty\x1a\x0c.Observation\"\x00\x12\x1e\n\x04Step\x12\x07.Action\x1a\x0b.Transition\"\x00\x12#\n\x06Render\x12\x0b.RenderMode\x1a\n.RenderOut\"\x00\x12\x1a\n\x04Seed\x12\x08.EnvSeed\x1a\x06.Empty\"\x00\x12\x1b\n\x06Sample\x12\x06.Empty\x1a\x07.Action\"\x00\x12\x19\n\x05\x43lose\x12\x06.Empty\x1a\x06.Empty\"\x00\x62\x06proto3'
 )
 
 
@@ -111,6 +111,13 @@ _NAME = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='wrapper', full_name='Name.wrapper', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -124,7 +131,7 @@ _NAME = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=85,
-  serialized_end=105,
+  serialized_end=122,
 )
 
 
@@ -169,8 +176,245 @@ _INFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=107,
-  serialized_end=205,
+  serialized_start=124,
+  serialized_end=222,
+)
+
+
+_STEPINFOKV_SMAPENTRY = _descriptor.Descriptor(
+  name='SMapEntry',
+  full_name='StepInfoKV.SMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='StepInfoKV.SMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='StepInfoKV.SMapEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=391,
+  serialized_end=434,
+)
+
+_STEPINFOKV_IMAPENTRY = _descriptor.Descriptor(
+  name='IMapEntry',
+  full_name='StepInfoKV.IMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='StepInfoKV.IMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='StepInfoKV.IMapEntry.value', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=436,
+  serialized_end=479,
+)
+
+_STEPINFOKV_FMAPENTRY = _descriptor.Descriptor(
+  name='FMapEntry',
+  full_name='StepInfoKV.FMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='StepInfoKV.FMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='StepInfoKV.FMapEntry.value', index=1,
+      number=2, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=481,
+  serialized_end=524,
+)
+
+_STEPINFOKV_BMAPENTRY = _descriptor.Descriptor(
+  name='BMapEntry',
+  full_name='StepInfoKV.BMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='StepInfoKV.BMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='StepInfoKV.BMapEntry.value', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=526,
+  serialized_end=569,
+)
+
+_STEPINFOKV = _descriptor.Descriptor(
+  name='StepInfoKV',
+  full_name='StepInfoKV',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='s_map', full_name='StepInfoKV.s_map', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='i_map', full_name='StepInfoKV.i_map', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='f_map', full_name='StepInfoKV.f_map', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='b_map', full_name='StepInfoKV.b_map', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_STEPINFOKV_SMAPENTRY, _STEPINFOKV_IMAPENTRY, _STEPINFOKV_FMAPENTRY, _STEPINFOKV_BMAPENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=225,
+  serialized_end=569,
+)
+
+
+_STEPINFO = _descriptor.Descriptor(
+  name='StepInfo',
+  full_name='StepInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='data', full_name='StepInfo.data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=571,
+  serialized_end=608,
 )
 
 
@@ -240,8 +484,8 @@ _SPACE = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='n', full_name='Space.n', index=8,
-      number=9, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
+      number=9, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -257,8 +501,8 @@ _SPACE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=208,
-  serialized_end=345,
+  serialized_start=611,
+  serialized_end=748,
 )
 
 
@@ -282,8 +526,8 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=347,
-  serialized_end=354,
+  serialized_start=750,
+  serialized_end=757,
 )
 
 
@@ -328,8 +572,8 @@ _OBSERVATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=356,
-  serialized_end=416,
+  serialized_start=759,
+  serialized_end=819,
 )
 
 
@@ -374,8 +618,8 @@ _ACTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=418,
-  serialized_end=473,
+  serialized_start=821,
+  serialized_end=876,
 )
 
 
@@ -408,6 +652,13 @@ _TRANSITION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='info', full_name='Transition.info', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -420,8 +671,8 @@ _TRANSITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=475,
-  serialized_end=557,
+  serialized_start=878,
+  serialized_end=985,
 )
 
 
@@ -452,8 +703,8 @@ _RENDERMODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=559,
-  serialized_end=585,
+  serialized_start=987,
+  serialized_end=1013,
 )
 
 
@@ -491,8 +742,8 @@ _RENDEROUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=587,
-  serialized_end=625,
+  serialized_start=1015,
+  serialized_end=1053,
 )
 
 
@@ -523,17 +774,29 @@ _ENVSEED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=627,
-  serialized_end=650,
+  serialized_start=1055,
+  serialized_end=1078,
 )
 
 _INFO.fields_by_name['observation_space'].message_type = _SPACE
 _INFO.fields_by_name['action_space'].message_type = _SPACE
+_STEPINFOKV_SMAPENTRY.containing_type = _STEPINFOKV
+_STEPINFOKV_IMAPENTRY.containing_type = _STEPINFOKV
+_STEPINFOKV_FMAPENTRY.containing_type = _STEPINFOKV
+_STEPINFOKV_BMAPENTRY.containing_type = _STEPINFOKV
+_STEPINFOKV.fields_by_name['s_map'].message_type = _STEPINFOKV_SMAPENTRY
+_STEPINFOKV.fields_by_name['i_map'].message_type = _STEPINFOKV_IMAPENTRY
+_STEPINFOKV.fields_by_name['f_map'].message_type = _STEPINFOKV_FMAPENTRY
+_STEPINFOKV.fields_by_name['b_map'].message_type = _STEPINFOKV_BMAPENTRY
+_STEPINFO.fields_by_name['data'].message_type = _STEPINFOKV
 _TRANSITION.fields_by_name['next_observation'].message_type = _OBSERVATION
+_TRANSITION.fields_by_name['info'].message_type = _STEPINFO
 DESCRIPTOR.message_types_by_name['ServerInfo'] = _SERVERINFO
 DESCRIPTOR.message_types_by_name['MetaData'] = _METADATA
 DESCRIPTOR.message_types_by_name['Name'] = _NAME
 DESCRIPTOR.message_types_by_name['Info'] = _INFO
+DESCRIPTOR.message_types_by_name['StepInfoKV'] = _STEPINFOKV
+DESCRIPTOR.message_types_by_name['StepInfo'] = _STEPINFO
 DESCRIPTOR.message_types_by_name['Space'] = _SPACE
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['Observation'] = _OBSERVATION
@@ -571,6 +834,52 @@ Info = _reflection.GeneratedProtocolMessageType('Info', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:Info)
   })
 _sym_db.RegisterMessage(Info)
+
+StepInfoKV = _reflection.GeneratedProtocolMessageType('StepInfoKV', (_message.Message,), {
+
+  'SMapEntry' : _reflection.GeneratedProtocolMessageType('SMapEntry', (_message.Message,), {
+    'DESCRIPTOR' : _STEPINFOKV_SMAPENTRY,
+    '__module__' : 'env_pb2'
+    # @@protoc_insertion_point(class_scope:StepInfoKV.SMapEntry)
+    })
+  ,
+
+  'IMapEntry' : _reflection.GeneratedProtocolMessageType('IMapEntry', (_message.Message,), {
+    'DESCRIPTOR' : _STEPINFOKV_IMAPENTRY,
+    '__module__' : 'env_pb2'
+    # @@protoc_insertion_point(class_scope:StepInfoKV.IMapEntry)
+    })
+  ,
+
+  'FMapEntry' : _reflection.GeneratedProtocolMessageType('FMapEntry', (_message.Message,), {
+    'DESCRIPTOR' : _STEPINFOKV_FMAPENTRY,
+    '__module__' : 'env_pb2'
+    # @@protoc_insertion_point(class_scope:StepInfoKV.FMapEntry)
+    })
+  ,
+
+  'BMapEntry' : _reflection.GeneratedProtocolMessageType('BMapEntry', (_message.Message,), {
+    'DESCRIPTOR' : _STEPINFOKV_BMAPENTRY,
+    '__module__' : 'env_pb2'
+    # @@protoc_insertion_point(class_scope:StepInfoKV.BMapEntry)
+    })
+  ,
+  'DESCRIPTOR' : _STEPINFOKV,
+  '__module__' : 'env_pb2'
+  # @@protoc_insertion_point(class_scope:StepInfoKV)
+  })
+_sym_db.RegisterMessage(StepInfoKV)
+_sym_db.RegisterMessage(StepInfoKV.SMapEntry)
+_sym_db.RegisterMessage(StepInfoKV.IMapEntry)
+_sym_db.RegisterMessage(StepInfoKV.FMapEntry)
+_sym_db.RegisterMessage(StepInfoKV.BMapEntry)
+
+StepInfo = _reflection.GeneratedProtocolMessageType('StepInfo', (_message.Message,), {
+  'DESCRIPTOR' : _STEPINFO,
+  '__module__' : 'env_pb2'
+  # @@protoc_insertion_point(class_scope:StepInfo)
+  })
+_sym_db.RegisterMessage(StepInfo)
 
 Space = _reflection.GeneratedProtocolMessageType('Space', (_message.Message,), {
   'DESCRIPTOR' : _SPACE,
@@ -629,6 +938,10 @@ EnvSeed = _reflection.GeneratedProtocolMessageType('EnvSeed', (_message.Message,
 _sym_db.RegisterMessage(EnvSeed)
 
 
+_STEPINFOKV_SMAPENTRY._options = None
+_STEPINFOKV_IMAPENTRY._options = None
+_STEPINFOKV_FMAPENTRY._options = None
+_STEPINFOKV_BMAPENTRY._options = None
 
 _ENVCONTROL = _descriptor.ServiceDescriptor(
   name='EnvControl',
@@ -637,8 +950,8 @@ _ENVCONTROL = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=652,
-  serialized_end=728,
+  serialized_start=1080,
+  serialized_end=1156,
   methods=[
   _descriptor.MethodDescriptor(
     name='Start',
@@ -673,8 +986,8 @@ _ENV = _descriptor.ServiceDescriptor(
   index=1,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=731,
-  serialized_end=980,
+  serialized_start=1159,
+  serialized_end=1408,
   methods=[
   _descriptor.MethodDescriptor(
     name='Handshake',

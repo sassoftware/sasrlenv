@@ -6,11 +6,30 @@ import grpc
 import numpy as np
 from concurrent import futures
 import argparse
-from sasrl_env.common.env_pb2 import Info, Observation, Transition, Action, Empty, RenderOut, MetaData
+from sasrl_env.common.env_pb2 import Info, Observation, Transition, Action, Empty, RenderOut, MetaData, StepInfoKV, \
+    StepInfo
 from sasrl_env.common.env_pb2_grpc import EnvServicer as Service, \
     add_EnvServicer_to_server as register
 from sasrl_env.utils import get_ip, get_space_message, serialize_data, deserialize_data
 from sasrl_env.common.utils import get_logger
+from sasrl_env.common.wrapper import Monitor
+
+# gym packages to import
+import pkg_resources
+
+installed_packages = pkg_resources.working_set
+installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
+                                  for i in installed_packages
+                                  if (i.key.startswith('gym') or i.key.endswith('gym'))])
+
+modules = sorted(["%s" % i.key.replace('-', '_')
+                  for i in installed_packages
+                  if ((i.key.startswith('gym') or i.key.endswith('gym')) and (i.key != 'gym'))])
+for library in modules:
+    try:
+        exec("import {module}".format(module=library))
+    except Exception as e:
+        print(e)
 
 logger = get_logger(log_level='debug')
 
@@ -36,6 +55,22 @@ def get_observation_m(observation):
     return observation_m
 
 
+def get_info_m(info: dict) -> StepInfo:
+    info_lst = []
+    for k, v in info.items():
+        if isinstance(v, str):
+            info_lst.append(StepInfoKV(s_map={k: v}))
+        elif isinstance(v, bool):
+            info_lst.append(StepInfoKV(b_map={k: v}))
+        elif isinstance(v, int):
+            info_lst.append(StepInfoKV(i_map={k: v}))
+        elif isinstance(v, float):
+            info_lst.append(StepInfoKV(f_map={k: v}))
+    info_m = StepInfo()
+    info_m.data.extend(info_lst)
+    return info_m
+
+
 def decode_action(action_m, action_space):
     if action_m.data_i:
         action = deserialize_data(action_m.data_i, action_space)
@@ -59,7 +94,7 @@ class Env(Service):
         @return: the metadata message which includes the version number
         """
         # set the version manually
-        version = "1.0.0"
+        version = "1.1.0"
         return MetaData(EnvVersion=version)
 
     def Make(self, name_m, _):
@@ -72,7 +107,13 @@ class Env(Service):
         name = name_m.data
         if not hasattr(self, 'env') or self.env.spec.id != name:
             self.env = gym.make(name)
+            self.env = Monitor(self.env)
         logger.info('Env {} created at port {}'.format(name, str(self.port)))
+
+        # wrap atari environments
+        if 'atari' in name_m.wrapper:
+            from sasrl_env.common.atari_wrappers import wrap_atari
+            self.env = wrap_atari(self.env)
 
         # check validity of observation_space
         try:
@@ -116,14 +157,16 @@ class Env(Service):
         """
         action = decode_action(action_m, self.env.action_space)
         try:
-            next_observation, reward, done, _ = self.env.step(action)
+            next_observation, reward, done, info = self.env.step(action)
         except TypeError:
-            next_observation, reward, done, _ = self.env.step(action.tolist())
+            next_observation, reward, done, info = self.env.step(action.tolist())
 
         next_observation = get_observation_m(next_observation)
+        info = get_info_m(info)
         return Transition(next_observation=next_observation,
                           reward=reward,
-                          done=done)
+                          done=done,
+                          info=info)
 
     def Render(self, rendermode_m, _):
         """
@@ -214,7 +257,7 @@ def start(port):
 if __name__ == '__main__':
     # this python file can be executed directly or via the environment controller
     parser = argparse.ArgumentParser('environment server')
-    parser.add_argument('--port', type=int, default=10007,
+    parser.add_argument('--port', '-p', type=int, default=10007,
                         help='the port number which hosts a single environment server.')
     args = parser.parse_args()
 

@@ -4,7 +4,7 @@
 import grpc
 import numpy as np
 
-from sasrl_env.common.env_pb2 import Action, Empty, Name
+from sasrl_env.common.env_pb2 import Action, Empty, Name, StepInfo, StepInfoKV
 from sasrl_env.common.env_pb2_grpc import EnvStub
 from sasrl_env.utils import decode_space_message, serialize_data, deserialize_data
 
@@ -17,9 +17,21 @@ def decode_observation(observation_m, observation_space):
     else:
         raise Exception("Client received no observation data.")
 
-
     return observation
 
+def decode_step_info(info_m: StepInfo):
+    info = {}
+    for info_m_kv in info_m.data:
+        if info_m_kv.f_map:
+            info.update(info_m_kv.f_map)
+        elif info_m_kv.b_map:
+            info.update(info_m_kv.b_map)
+        elif info_m_kv.i_map:
+            info.update(info_m_kv.i_map)
+        elif info_m_kv.s_map:
+            info.update(info_m_kv.s_map)
+
+    return info
 
 def get_action_m(action):
     """
@@ -43,13 +55,13 @@ def get_action_m(action):
 
 class Env(object):
 
-    def __init__(self, name, address):
+    def __init__(self, name, address, wrapper=None):
         self.channel = grpc.insecure_channel(address)
         self.env = EnvStub(self.channel)
-        self.make(name)
+        self.make(name, wrapper)
 
-    def make(self, name):
-        info = self.env.Make(Name(data=name))
+    def make(self, name, wrapper=None):
+        info = self.env.Make(Name(data=name, wrapper=wrapper))
 
         self.observation_space = decode_space_message(info.observation_space)
         self.action_space = decode_space_message(info.action_space)
@@ -62,7 +74,8 @@ class Env(object):
         action_m = get_action_m(action)
         transition = self.env.Step(action_m)
         next_observation = decode_observation(transition.next_observation, self.observation_space)
-        return next_observation, transition.reward, transition.done
+        info = decode_step_info(transition.info)
+        return next_observation, transition.reward, transition.done, info
 
     def Sample(self):
         action = self.env.Sample(Empty())
@@ -128,7 +141,7 @@ if __name__ == '__main__':
                     action = [1, 1, 1, 1]
                 else:
                     action = 1
-                ns, r, done = env.step(action)
+                ns, r, done, info = env.step(action)
                 cnt += 1
                 j += 1
                 s = ns

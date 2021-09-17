@@ -48,8 +48,8 @@ if __name__ == '__main__':
     time.sleep(2)
 
     envAddress = '{}:{}'.format(host, env_port)
-    env = Env('CartPole-v0', envAddress)
-
+    #env = Env('CartPole-v0', envAddress)
+    env = Env('BreakoutNoFrameskip-v0', envAddress, wrapper=["atari"])
     st = time.time()
     cnt = 0
     for i in range(1000):
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         cnt += 1
         done = False
         while not done:
-            ns, r, done = env.step(1)
+            ns, r, done, info = env.step(1)
             cnt += 1
             s = ns
             # report

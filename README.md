@@ -13,9 +13,8 @@ In the python environment, the installed package needs to be imported and starte
   - runServer.start(#PORT_NUMBER)
 
 **Notes**: 
-- If you specify 0 as the port number when running the server, the environment controller will assign an available port automatically.
+- If you do not specify a port when running the server, the environment controller will assign an available port automatically.
 - If the specified port is not free, it will increment the port numbers until finding the first available port.
-
 ## Contributing
 We welcome your contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit contributions to this project.
 

@@ -100,7 +100,7 @@ def get_space_message(space):
         if np.issubdtype(dtype, np.integer):
             space_m = [Space(type=type,
                              dtype='int',
-                             n=[space.n])]
+                             n=space.n)]
         else:
             raise Exception("Only int data type is supported for space of type Discrete.")
 
@@ -166,7 +166,7 @@ def get_space_message(space):
                 if np.issubdtype(sub_dtype, np.integer):
                     space_m.append(Space(type=sub_type,
                                          dtype='int',
-                                         n=[s.n]))
+                                         n=s.n))
                 else:
                     raise Exception("Only int data type is supported for space of type Discrete.")
 
@@ -243,7 +243,7 @@ def serialize_data(data):
 def deserialize_data(data, space):
 
     if not isinstance(data, np.ndarray):
-        data = np.array(data)
+        data_ = np.array(data)
 
     # space type of tuple
     if isinstance(space, tuple):
@@ -252,7 +252,7 @@ def deserialize_data(data, space):
         for osp in space:
             osp_size = int(np.prod(osp.shape))
 
-            data_.append(data[cnt:cnt + osp_size].reshape(osp.shape))
+            data_.append(np.array(data[cnt:cnt + osp_size]).reshape(osp.shape))
             cnt += osp_size
 
         assert cnt == len(data), 'There is a bug in decoding tuple space.'
@@ -270,7 +270,7 @@ def deserialize_data(data, space):
         assert cnt == len(data), 'There is a bug in decoding dict space.'
 
     else:
-        data_ = np.array(data, dtype=np.int).squeeze().reshape(space.shape)
+        data_ = np.array(data).squeeze().reshape(space.shape)
 
     return data_
 

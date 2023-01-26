@@ -15,12 +15,13 @@
 
 ''' Install Remote Environment Using GRPC '''
 import setuptools
+
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="sasrl-env",
-    version="1.1.0",
+    version="1.2.0",
     author="SAS",
     author_email='support@sas.com',
     license='Apache 2.0',
@@ -29,9 +30,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://gitlab.sas.com/RezaNazari/rlenv_grpc.git",
     packages=setuptools.find_packages(),
-    install_requires=['grpcio','protobuf','gym'],
+    install_requires=['grpcio>=1.50.0', 'protobuf>=4.21.9', 'gym>=0.26.2'],
     classifiers=["Programming Language :: Python :: 3",
-        "Operating System :: OS Independent",
-    ],
-    python_requires='>=3.6',
+                 "Operating System :: OS Independent",
+                 ],
+    python_requires='>=3.7',
 )

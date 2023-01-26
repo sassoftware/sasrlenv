@@ -121,7 +121,7 @@ class EnvStub(object):
         self.Reset = channel.unary_unary(
                 '/Env/Reset',
                 request_serializer=env__pb2.Empty.SerializeToString,
-                response_deserializer=env__pb2.Observation.FromString,
+                response_deserializer=env__pb2.Transition.FromString,
                 )
         self.Step = channel.unary_unary(
                 '/Env/Step',
@@ -217,7 +217,7 @@ def add_EnvServicer_to_server(servicer, server):
             'Reset': grpc.unary_unary_rpc_method_handler(
                     servicer.Reset,
                     request_deserializer=env__pb2.Empty.FromString,
-                    response_serializer=env__pb2.Observation.SerializeToString,
+                    response_serializer=env__pb2.Transition.SerializeToString,
             ),
             'Step': grpc.unary_unary_rpc_method_handler(
                     servicer.Step,
@@ -301,7 +301,7 @@ class Env(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Env/Reset',
             env__pb2.Empty.SerializeToString,
-            env__pb2.Observation.FromString,
+            env__pb2.Transition.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

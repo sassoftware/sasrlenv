@@ -6,11 +6,11 @@ import grpc
 import numpy as np
 from concurrent import futures
 import argparse
-from sasrl_env.common.env_pb2 import Info, Observation, Transition, Action, Empty, RenderOut, MetaData, StepInfoKV, \
-    StepInfo
+from sasrl_env.common.env_pb2 import Info, Observation, Transition, Action, Empty, RenderOut, MetaData, \
+    StepInfoKVInt, StepInfoKVString, StepInfoKVFloat, StepInfoKVBool, StepInfo
 from sasrl_env.common.env_pb2_grpc import EnvServicer as Service, \
     add_EnvServicer_to_server as register
-from sasrl_env.utils import get_ip, get_space_message, serialize_data, deserialize_data
+from sasrl_env.utils.utils import get_ip, get_space_message, serialize_data, deserialize_data
 from sasrl_env.common.utils import get_logger
 from sasrl_env.common.wrapper import Monitor
 
@@ -56,18 +56,20 @@ def get_observation_m(observation):
 
 
 def get_info_m(info: dict) -> StepInfo:
-    info_lst = []
+    info_m = StepInfo()
     for k, v in info.items():
         if isinstance(v, str):
-            info_lst.append(StepInfoKV(s_map={k: v}))
+            info = StepInfoKVString(key=k, value=v)
+            info_m.data_str.append(info)
         elif isinstance(v, bool):
-            info_lst.append(StepInfoKV(b_map={k: v}))
+            info = StepInfoKVBool(key=k, value=v)
+            info_m.data_bool.append(info)
         elif isinstance(v, int):
-            info_lst.append(StepInfoKV(i_map={k: v}))
+            info = StepInfoKVInt(key=k, value=v)
+            info_m.data_int.append(info)
         elif isinstance(v, float):
-            info_lst.append(StepInfoKV(f_map={k: v}))
-    info_m = StepInfo()
-    info_m.data.extend(info_lst)
+            info = StepInfoKVFloat(key=k, value=v)
+            info_m.data_float.append(info)
     return info_m
 
 
@@ -94,7 +96,8 @@ class Env(Service):
         @return: the metadata message which includes the version number
         """
         # set the version manually
-        version = "1.1.0"
+        version = "1.2.0"
+
         return MetaData(EnvVersion=version)
 
     def Make(self, name_m, _):
@@ -145,9 +148,13 @@ class Env(Service):
         """
         This function resets the environment and returns the encoded observation message.
         @param empty_m: empty message
-        @return: 1 dimensional encoded observation
+        @return: 1 dimensional encoded observation and an info dict
         """
-        return get_observation_m(self.env.reset())
+        next_observation, info = self.env.reset()
+        next_observation = get_observation_m(next_observation)
+        info = get_info_m(info)
+        return Transition(next_observation=next_observation,
+                   info=info)
 
     def Step(self, action_m, _):
         """
@@ -238,7 +245,7 @@ class register_server(object):
         register(Env(port), server)
         server.add_insecure_port(address)
         server.start()
-        logger.info("Started server at: {}".format(address))
+        logger.info("Started env server at: {}".format(address))
         server.wait_for_termination()
         return 0
 

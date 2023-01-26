@@ -4,8 +4,9 @@
 import logging
 import os
 from pathlib import Path
+home = str(Path.home())
 
-def get_logger(log_dir=os.path.join(os.getcwd(),'.SASGym'),log_level='debug'):
+def get_logger(log_dir=home+'/.SASGym',log_level='debug'):
     # set logger
     logger = logging.getLogger()
     logFormatter = logging.Formatter("%(asctime)s %(levelname)s %(process)s [%(funcName)s:%(lineno)d] %(message)s")

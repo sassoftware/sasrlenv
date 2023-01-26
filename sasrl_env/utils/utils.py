@@ -213,7 +213,7 @@ def decode_space_message(sms):
                                                 dtype=int))
 
             elif sm.type == 'discrete':
-                space.append(gym.spaces.Discrete(np.array(sm.n)))
+                space.append(gym.spaces.Discrete(sm.n))
 
         if len(space) == 1:
             space = space[0]

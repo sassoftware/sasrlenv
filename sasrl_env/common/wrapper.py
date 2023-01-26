@@ -65,8 +65,13 @@ class Monitor(gym.Wrapper):
         """
         if self.needs_reset:
             raise RuntimeError("Tried to step environment that needs reset")
-        observation, reward, done, info = self.env.step(action)
+        observation, reward, done_terminated, done_truncated, info = self.env.step(action)
         self.rewards.append(reward)
+
+        done = False
+        if done_terminated or done_truncated:
+            done = True
+
         if done:
             self.needs_reset = True
             ep_rew = sum(self.rewards)

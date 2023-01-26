@@ -48,12 +48,26 @@ if __name__ == '__main__':
     time.sleep(2)
 
     envAddress = '{}:{}'.format(host, env_port)
-    #env = Env('CartPole-v0', envAddress)
-    env = Env('BreakoutNoFrameskip-v0', envAddress, wrapper=["atari"])
+
+    trial = 0
+    max_trial = 10
+    while (trial <= max_trial):
+        try:
+            time.sleep(1)
+            env = Env('CartPole-v1', envAddress)
+            break
+        except:
+            print("Trying to connect to env server: attempt #{}".format(trial))
+            trial += 1
+            if trial == max_trial:
+                raise Exception("Unable to connect to env server at: {}".format(envAddress))
+
+
+    # env = Env('BreakoutNoFrameskip-v4', envAddress, wrapper=["atari"])
     st = time.time()
     cnt = 0
-    for i in range(1000):
-        s = env.reset()
+    for i in range(100):
+        s, info = env.reset()
         cnt += 1
         done = False
         while not done:

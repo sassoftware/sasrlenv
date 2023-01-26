@@ -9,7 +9,7 @@ import atexit
 
 import pkg_resources
 
-from sasrl_env.utils import check_free_port, get_ip, find_free_port
+from sasrl_env.utils.utils import check_free_port, get_ip, find_free_port
 from sasrl_env.common.env_pb2 import ServerInfo, Empty
 from sasrl_env.common.env_pb2_grpc import EnvControlServicer as Service, \
     add_EnvControlServicer_to_server as register
@@ -63,7 +63,17 @@ class EnvControl(Service):
             if self.cur_port not in self.subps.keys():
                 if check_free_port(self.host, self.cur_port):
                     # subp = subprocess.Popen(['python', 'serverSingle.py', '--port', '{}'.format(str(self.cur_port))])
-                    subp = subprocess.Popen(['python', '-m', 'sasrl_env.serverSingle', '--port', '{}'.format(str(self.cur_port))])
+                    try:
+                        subp = subprocess.Popen(
+                            ['python', '-m', 'sasrl_env.serverSingle', '--port', '{}'.format(str(self.cur_port))])
+                    except:
+                        try:
+                            subp = subprocess.Popen(
+                                ['python3', '-m', 'sasrl_env.serverSingle', '--port', '{}'.format(str(self.cur_port))])
+                        except:
+                            raise Exception("Could not find Python executable to run the environment server.")
+
+
                     port_number = self.cur_port
                     self.subps[port_number] = subp
                     self.cur_port += 1

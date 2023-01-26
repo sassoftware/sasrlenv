@@ -6,7 +6,7 @@ import numpy as np
 
 from sasrl_env.common.env_pb2 import Action, Empty, Name, StepInfo, StepInfoKV
 from sasrl_env.common.env_pb2_grpc import EnvStub
-from sasrl_env.utils import decode_space_message, serialize_data, deserialize_data
+from sasrl_env.utils.utils import decode_space_message, serialize_data, deserialize_data
 
 
 def decode_observation(observation_m, observation_space):
@@ -21,15 +21,14 @@ def decode_observation(observation_m, observation_space):
 
 def decode_step_info(info_m: StepInfo):
     info = {}
-    for info_m_kv in info_m.data:
-        if info_m_kv.f_map:
-            info.update(info_m_kv.f_map)
-        elif info_m_kv.b_map:
-            info.update(info_m_kv.b_map)
-        elif info_m_kv.i_map:
-            info.update(info_m_kv.i_map)
-        elif info_m_kv.s_map:
-            info.update(info_m_kv.s_map)
+    for info_m_kv in info_m.data_int:
+        info[info_m_kv.key] = info_m_kv.value
+    for info_m_kv in info_m.data_str:
+        info[info_m_kv.key] = info_m_kv.value
+    for info_m_kv in info_m.data_bool:
+        info[info_m_kv.key] = info_m_kv.value
+    for info_m_kv in info_m.data_float:
+        info[info_m_kv.key] = info_m_kv.value
 
     return info
 
@@ -68,7 +67,10 @@ class Env(object):
         self._max_episode_steps = info.max_episode_steps
 
     def reset(self):
-        return decode_observation(self.env.Reset(Empty()), self.observation_space)
+        transition = self.env.Reset(Empty())
+        next_observation = decode_observation(transition.next_observation, self.observation_space)
+        info = decode_step_info(transition.info)
+        return next_observation , info
 
     def step(self, action):
         action_m = get_action_m(action)
@@ -96,14 +98,14 @@ if __name__ == '__main__':
     address = '{}:{}'.format(host, port)
 
     env_names = [
-        'CartPole-v0', 'MountainCar-v0', 'MountainCarContinuous-v0', 'Pendulum-v0',
-        'Acrobot-v1', 'LunarLander-v2', 'LunarLanderContinuous-v2', 'BipedalWalker-v3',
-        'BipedalWalkerHardcore-v3', 'Blackjack-v0', 'KellyCoinflip-v0', 'KellyCoinflipGeneralized-v0',
-        'FrozenLake-v0', 'FrozenLake8x8-v0', 'CliffWalking-v0', 'NChain-v0', 'Roulette-v0',
-        'Taxi-v3', 'GuessingGame-v0', 'HotterColder-v0'
+        # 'CartPole-v0', 'MountainCar-v0', 'MountainCarContinuous-v0', 'Pendulum-v1',
+        # 'Acrobot-v1', 'LunarLander-v2', 'LunarLanderContinuous-v2', 'BipedalWalker-v3',
+        # 'BipedalWalkerHardcore-v3', 'Blackjack-v1', 'FrozenLake-v1', 'FrozenLake8x8-v1', 'CliffWalking-v0',
+        # 'Taxi-v3'
     ]
 
-    for game in ['adventure',
+    for game in [
+        'adventure',
                  # 'air_raid', 'alien', 'amidar', 'assault', 'asterix', 'asteroids', 'atlantis',
         #          'bank_heist', 'battle_zone', 'beam_rider', 'berzerk', 'bowling', 'boxing', 'breakout', 'carnival',
         #          'centipede', 'chopper_command', 'crazy_climber', 'demon_attack', 'double_dunk',
@@ -130,7 +132,7 @@ if __name__ == '__main__':
         st = time.time()
         cnt = 0
         for i in range(1):
-            s = env.reset()
+            s, info = env.reset()
             cnt += 1
             j = 0
             done = False

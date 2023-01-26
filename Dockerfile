@@ -4,6 +4,10 @@ WORKDIR /rlenv
 ENV PYTHONUNBUFFERED=1
 COPY sasrl_env/runServer.py ${SRC_DIR}/
 
+# install box2d
+RUN apt-get install -y swig
+RUN pip install gym['box2d']
+
 # isntall sasrl-env
 RUN pip install sasrl-env
 

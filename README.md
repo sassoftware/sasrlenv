@@ -1,7 +1,7 @@
 # sasrl-env
 
 ## Overview
-This package is used for communicating with a remote python environment of SAS customers. It uses the google remote procedure call (gRPC) to provide a fast communication.   
+This package is used for communicating with a remote RL python environment of SAS customers. It uses the google remote procedure call (gRPC) to provide a fast communication.   
 
 ### Installation
 The sasrl-env package needs to be installed using the following command:
@@ -22,8 +22,14 @@ We welcome your contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) fo
 This project is licensed under the [Apache 2.0 License](LICENSE).
 
 ## Supported version:
-* protoc 3.13.0
-* grpc 1.34.1
+We support Python >= 3.7
+
+Dependencies:
+* grpcio>=1.50.0
+* protobuf>=4.21.9
+* gym>=0.26.2
+* typing_extensions>=4.4.0
+ 
 
 ## Additional Resources
 * Documentation links

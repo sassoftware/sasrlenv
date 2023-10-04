@@ -96,7 +96,7 @@ class Env(Service):
         @return: the metadata message which includes the version number
         """
         # set the version manually
-        version = "1.3.0"
+        version = "1.4.0"
 
         return MetaData(EnvVersion=version)
 

@@ -8,7 +8,7 @@ from contextlib import closing
 import gym
 import numpy as np
 
-from sasrl_env.common.env_pb2 import Space
+from sasrl_env.common.proto.build.env_pb2 import Space
 
 
 def get_ip():
@@ -177,7 +177,7 @@ def get_space_message(space):
 
 
 def decode_space_message(sms):
-    if sms[0].key is not '':
+    if sms[0].key != '':
         # dict space
         space = {}
         for sm in sms:

@@ -3,8 +3,8 @@
 
 import atexit
 import grpc
-from sasrl_env.common.env_pb2 import Empty, ServerInfo
-from sasrl_env.common.env_pb2_grpc import EnvControlStub
+from sasrl_env.common.proto.build.env_pb2 import Empty, ServerInfo
+from sasrl_env.common.proto.build.env_pb2_grpc import EnvControlStub
 from sasrl_env.client import Env
 
 
@@ -28,7 +28,6 @@ class EnvControl(object):
         del self.ports[port]
 
     def cleanup(self):
-        # pass
         for port, _ in self.ports.items():
             self.server.Close(ServerInfo(port=port))
 
@@ -38,7 +37,7 @@ if __name__ == '__main__':
     import time
 
     host = '10.122.32.31'
-    port = '10006'
+    port = '15008'
     address = '{}:{}'.format(host, port)
 
     # env = Env('Pong-v0', address)

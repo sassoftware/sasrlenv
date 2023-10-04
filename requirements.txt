@@ -1,5 +1,5 @@
 ###### Requirements without Version Specifiers ######
-grpcio==1.50.0
-protobuf==4.21.9
-gym==0.26.2
-typing_extensions==4.4.0
+grpcio>=1.50.0
+protobuf>=4.21.9
+gym>=0.26.2
+typing_extensions>=4.4.0

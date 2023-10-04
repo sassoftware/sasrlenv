@@ -4,8 +4,8 @@
 import grpc
 import numpy as np
 
-from sasrl_env.common.env_pb2 import Action, Empty, Name, StepInfo, StepInfoKV
-from sasrl_env.common.env_pb2_grpc import EnvStub
+from sasrl_env.common.proto.build.env_pb2 import Action, Empty, Name, StepInfo, StepInfoKV
+from sasrl_env.common.proto.build.env_pb2_grpc import EnvStub
 from sasrl_env.utils.utils import decode_space_message, serialize_data, deserialize_data
 
 
@@ -59,8 +59,8 @@ class Env(object):
         self.env = EnvStub(self.channel)
         self.make(name, wrapper)
 
-    def make(self, name, wrapper=None):
-        info = self.env.Make(Name(data=name, wrapper=wrapper))
+    def make(self, name, wrapper=None, render_mode=None):
+        info = self.env.Make(Name(data=name, wrapper=wrapper, render_mode=render_mode))
 
         self.observation_space = decode_space_message(info.observation_space)
         self.action_space = decode_space_message(info.action_space)
@@ -79,15 +79,14 @@ class Env(object):
         info = decode_step_info(transition.info)
         return next_observation, transition.reward, transition.done, info
 
-    def Sample(self):
+    def sample(self):
         action = self.env.Sample(Empty())
         return action
 
-    def Close(self):
-        self.env.Close()
-
     def close(self):
+        self.env.Close(Empty())
         self.channel.close()
+
 
 
 if __name__ == '__main__':

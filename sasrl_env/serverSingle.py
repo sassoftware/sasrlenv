@@ -6,9 +6,9 @@ import grpc
 import numpy as np
 from concurrent import futures
 import argparse
-from sasrl_env.common.env_pb2 import Info, Observation, Transition, Action, Empty, RenderOut, MetaData, \
+from sasrl_env.common.proto.build.env_pb2 import Info, Observation, Transition, Action, Empty, RenderOut, MetaData, \
     StepInfoKVInt, StepInfoKVString, StepInfoKVFloat, StepInfoKVBool, StepInfo
-from sasrl_env.common.env_pb2_grpc import EnvServicer as Service, \
+from sasrl_env.common.proto.build.env_pb2_grpc import EnvServicer as Service, \
     add_EnvServicer_to_server as register
 from sasrl_env.utils.utils import get_ip, get_space_message, serialize_data, deserialize_data
 from sasrl_env.common.utils import get_logger
@@ -96,7 +96,7 @@ class Env(Service):
         @return: the metadata message which includes the version number
         """
         # set the version manually
-        version = "1.2.0"
+        version = "1.3.0"
 
         return MetaData(EnvVersion=version)
 
@@ -108,8 +108,17 @@ class Env(Service):
                 length of the environment
         """
         name = name_m.data
+
+
         if not hasattr(self, 'env') or self.env.spec.id != name:
-            self.env = gym.make(name)
+            if name_m.render_mode == "":
+                self.env = gym.make(name)
+            else:
+                try:
+                    self.env = gym.make(name, render_mode=name_m.render_mode)
+                except TypeError:
+                    # if __init__() of environment does not have render_mode, we initialize by name only
+                    self.env = gym.make(name)
             self.env = Monitor(self.env)
         logger.info('Env {} created at port {}'.format(name, str(self.port)))
 
@@ -181,7 +190,7 @@ class Env(Service):
         @param rendermode_m: the type of render. It can be 'rgb_array', ansi', or 'human'
         @return: render message
         """
-        res = self.env.render(rendermode_m.data)
+        res = self.env.render()
 
         mode = rendermode_m.data
         if mode == 'rgb_array':

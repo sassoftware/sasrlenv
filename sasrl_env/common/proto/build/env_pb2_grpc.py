@@ -2,11 +2,12 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import sasrl_env.common.env_pb2 as env__pb2
+import sasrl_env.common.proto.build.env_pb2 as env__pb2
 
 
 class EnvControlStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Environment controller is the service that starts a python process to run gym environments
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -27,7 +28,8 @@ class EnvControlStub(object):
 
 
 class EnvControlServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Environment controller is the service that starts a python process to run gym environments
+    """
 
     def Start(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -62,7 +64,8 @@ def add_EnvControlServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class EnvControl(object):
-    """Missing associated documentation comment in .proto file."""
+    """Environment controller is the service that starts a python process to run gym environments
+    """
 
     @staticmethod
     def Start(request,
@@ -100,7 +103,8 @@ class EnvControl(object):
 
 
 class EnvStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Env service is responsible for RL environments
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -151,7 +155,8 @@ class EnvStub(object):
 
 
 class EnvServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Env service is responsible for RL environments
+    """
 
     def Handshake(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -252,7 +257,8 @@ def add_EnvServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Env(object):
-    """Missing associated documentation comment in .proto file."""
+    """Env service is responsible for RL environments
+    """
 
     @staticmethod
     def Handshake(request,

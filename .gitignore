@@ -4,4 +4,9 @@
 /sasrl_env/__pycache__/
 /build/
 */__pycache__/
+/sasrl_env/common/cpp/cmake-build-debug/
+/sasrl_env/common/cpp/.idea/
+/sasrl_env/colorImages/
+/sasrl_env/grayRectImages/
+/sasrl_env/images/
 /sasrl_env.egg-info/

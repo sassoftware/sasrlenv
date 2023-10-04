@@ -21,7 +21,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sasrl-env",
-    version="1.2.0",
+    version="1.3.0",
     author="SAS",
     author_email='support@sas.com',
     license='Apache 2.0',

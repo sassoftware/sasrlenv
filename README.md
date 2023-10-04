@@ -32,6 +32,8 @@ Dependencies:
  
 
 ## Additional Resources
-* Documentation links
-* Blog posts
+* Documentation links:
+  * https://go.documentation.sas.com/doc/en/vdmmlcdc/v_017/vdmmladvug/n0odbu962pwfy0n11w7tfed90hku.htm 
+* Blog posts:
+  * https://blogs.sas.com/content/subconsciousmusings/2022/02/25/reinforcement-learning-to-master-games/
 * SAS Communities

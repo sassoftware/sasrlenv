@@ -10,8 +10,8 @@ import atexit
 import pkg_resources
 
 from sasrl_env.utils.utils import check_free_port, get_ip, find_free_port
-from sasrl_env.common.env_pb2 import ServerInfo, Empty
-from sasrl_env.common.env_pb2_grpc import EnvControlServicer as Service, \
+from sasrl_env.common.proto.build.env_pb2 import ServerInfo, Empty
+from sasrl_env.common.proto.build.env_pb2_grpc import EnvControlServicer as Service, \
     add_EnvControlServicer_to_server as register
 
 # gym packages to import
@@ -46,7 +46,7 @@ class EnvControl(Service):
         super(EnvControl, self).__init__()
         self.host = get_ip()
         self.main_port = port
-        self.cur_port = port + 1
+        self.cur_port = -1
         self.subps = {}
         atexit.register(self.cleanup)
 
@@ -58,7 +58,7 @@ class EnvControl(Service):
             in which the environment server process is listening
         """
         # todo: raise if no free port found
-        self.cur_port = self.main_port + 1
+        self.cur_port = max(self.main_port + 1, self.cur_port)
         while True:
             if self.cur_port not in self.subps.keys():
                 if check_free_port(self.host, self.cur_port):
@@ -97,6 +97,11 @@ class EnvControl(Service):
         self.subps[port].terminate()
         logger.info("Env server listening on port {} terminated".format(str(port)))
         del self.subps[port]
+
+        if(len(self.subps)> 0):
+            self.cur_port = max(self.main_port, max(self.subps)) + 1
+        else:
+            self.cur_port = self.main_port + 1
 
         return Empty()
 
@@ -151,7 +156,7 @@ class registerController(object):
         server.wait_for_termination()
 
 
-def start(port):
+def start(port=0):
     rs = registerController()
     rs.start(port)
 
